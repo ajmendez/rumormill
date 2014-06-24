@@ -1,0 +1,798 @@
+[
+  {
+    "comment": "Offer accepted", 
+    "lines": [], 
+    "version": "1139", 
+    "user": "anonymous", 
+    "date": "2014-04-11T09:26:00", 
+    "changes": []
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        559, 
+        563
+      ]
+    ], 
+    "version": "1140", 
+    "user": "anonymous", 
+    "date": "2014-04-13T21:59:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        695, 
+        699
+      ]
+    ], 
+    "version": "1141", 
+    "user": "anonymous", 
+    "date": "2014-04-13T22:02:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        1751, 
+        1755
+      ]
+    ], 
+    "version": "1142", 
+    "user": "anonymous", 
+    "date": "2014-04-15T08:28:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "Updated Caltech Prize Fellowships", 
+    "lines": [
+      [
+        271, 
+        275
+      ]
+    ], 
+    "version": "1143", 
+    "user": "cchayward", 
+    "date": "2014-04-15T18:44:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        815, 
+        819
+      ], 
+      [
+        1551, 
+        1555
+      ]
+    ], 
+    "version": "1144", 
+    "user": "anonymous", 
+    "date": "2014-04-16T15:41:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        407, 
+        411
+      ]
+    ], 
+    "version": "1145", 
+    "user": "dabrusco", 
+    "date": "2014-04-20T21:48:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "Edited \"University of Leeds (4 positions in star formation, ad)\"", 
+    "lines": [
+      [
+        2231, 
+        2235
+      ]
+    ], 
+    "version": "1146", 
+    "user": "anonymous", 
+    "date": "2014-04-22T14:39:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "\"astrastrochemistry and star/planet formation\" positions at MPE are in new CAS@MPE group led by Paola Caselli", 
+    "lines": [
+      [
+        1404, 
+        1408
+      ]
+    ], 
+    "version": "1147", 
+    "user": "anonymous", 
+    "date": "2014-04-25T01:55:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        2039, 
+        2043
+      ]
+    ], 
+    "version": "1148", 
+    "user": "anonymous", 
+    "date": "2014-04-25T12:34:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        1551, 
+        1555
+      ]
+    ], 
+    "version": "1149", 
+    "user": "anonymous", 
+    "date": "2014-04-27T08:12:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        1639, 
+        1643
+      ]
+    ], 
+    "version": "1150", 
+    "user": "kn", 
+    "date": "2014-04-27T22:40:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        1039, 
+        1043
+      ]
+    ], 
+    "version": "1151", 
+    "user": "anonymous", 
+    "date": "2014-04-28T02:37:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "added job for Oxford", 
+    "lines": [
+      [
+        1680, 
+        1683
+      ]
+    ], 
+    "version": "1152", 
+    "user": "ralph.schoenrich", 
+    "date": "2014-05-02T05:56:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        1295, 
+        1299
+      ]
+    ], 
+    "version": "1153", 
+    "user": "anonymous", 
+    "date": "2014-05-05T15:09:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        64, 
+        67
+      ]
+    ], 
+    "version": "1154", 
+    "user": "aberlind", 
+    "date": "2014-05-06T15:28:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        943, 
+        947
+      ]
+    ], 
+    "version": "1155", 
+    "user": "anonymous", 
+    "date": "2014-05-11T05:34:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "Ashley Ross OSU CCAPP", 
+    "lines": [
+      [
+        1663, 
+        1667
+      ]
+    ], 
+    "version": "1156", 
+    "user": "anonymous", 
+    "date": "2014-05-16T03:39:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "OSU CCAPP", 
+    "lines": [
+      [
+        1663, 
+        1667
+      ]
+    ], 
+    "version": "1157", 
+    "user": "anonymous", 
+    "date": "2014-05-16T03:42:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        1248, 
+        1251
+      ]
+    ], 
+    "version": "1158", 
+    "user": "anonymous", 
+    "date": "2014-05-21T09:17:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "Dublin Institute for Advanced Studies", 
+    "lines": [
+      [
+        536, 
+        539
+      ]
+    ], 
+    "version": "1159", 
+    "user": "rainsworth", 
+    "date": "2014-05-30T06:12:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "[rollback version 1158]", 
+    "lines": [
+      [
+        536, 
+        547
+      ]
+    ], 
+    "version": "1160", 
+    "user": "anonymous", 
+    "date": "2014-05-21T09:17:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "added University of Geneva (with Schaerer,)", 
+    "lines": [
+      [
+        2216, 
+        2219
+      ]
+    ], 
+    "version": "1161", 
+    "user": "anonymous", 
+    "date": "2014-06-03T11:58:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        1840, 
+        1843
+      ]
+    ], 
+    "version": "1162", 
+    "user": "anonymous", 
+    "date": "2014-06-05T20:27:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        1583, 
+        1587
+      ]
+    ], 
+    "version": "1138", 
+    "user": "anonymous", 
+    "date": "2014-04-09T19:09:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "Offer accepted", 
+    "lines": [], 
+    "version": "1139", 
+    "user": "anonymous", 
+    "date": "2014-04-11T09:26:00", 
+    "changes": []
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        559, 
+        563
+      ]
+    ], 
+    "version": "1140", 
+    "user": "anonymous", 
+    "date": "2014-04-13T21:59:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        695, 
+        699
+      ]
+    ], 
+    "version": "1141", 
+    "user": "anonymous", 
+    "date": "2014-04-13T22:02:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        1751, 
+        1755
+      ]
+    ], 
+    "version": "1142", 
+    "user": "anonymous", 
+    "date": "2014-04-15T08:28:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "Updated Caltech Prize Fellowships", 
+    "lines": [
+      [
+        271, 
+        275
+      ]
+    ], 
+    "version": "1143", 
+    "user": "cchayward", 
+    "date": "2014-04-15T18:44:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        815, 
+        819
+      ], 
+      [
+        1551, 
+        1555
+      ]
+    ], 
+    "version": "1144", 
+    "user": "anonymous", 
+    "date": "2014-04-16T15:41:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        407, 
+        411
+      ]
+    ], 
+    "version": "1145", 
+    "user": "dabrusco", 
+    "date": "2014-04-20T21:48:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "Edited \"University of Leeds (4 positions in star formation, ad)\"", 
+    "lines": [
+      [
+        2231, 
+        2235
+      ]
+    ], 
+    "version": "1146", 
+    "user": "anonymous", 
+    "date": "2014-04-22T14:39:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "\"astrastrochemistry and star/planet formation\" positions at MPE are in new CAS@MPE group led by Paola Caselli", 
+    "lines": [
+      [
+        1404, 
+        1408
+      ]
+    ], 
+    "version": "1147", 
+    "user": "anonymous", 
+    "date": "2014-04-25T01:55:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        2039, 
+        2043
+      ]
+    ], 
+    "version": "1148", 
+    "user": "anonymous", 
+    "date": "2014-04-25T12:34:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        1551, 
+        1555
+      ]
+    ], 
+    "version": "1149", 
+    "user": "anonymous", 
+    "date": "2014-04-27T08:12:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        1639, 
+        1643
+      ]
+    ], 
+    "version": "1150", 
+    "user": "kn", 
+    "date": "2014-04-27T22:40:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        1039, 
+        1043
+      ]
+    ], 
+    "version": "1151", 
+    "user": "anonymous", 
+    "date": "2014-04-28T02:37:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "added job for Oxford", 
+    "lines": [
+      [
+        1680, 
+        1683
+      ]
+    ], 
+    "version": "1152", 
+    "user": "ralph.schoenrich", 
+    "date": "2014-05-02T05:56:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        1295, 
+        1299
+      ]
+    ], 
+    "version": "1153", 
+    "user": "anonymous", 
+    "date": "2014-05-05T15:09:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        64, 
+        67
+      ]
+    ], 
+    "version": "1154", 
+    "user": "aberlind", 
+    "date": "2014-05-06T15:28:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        943, 
+        947
+      ]
+    ], 
+    "version": "1155", 
+    "user": "anonymous", 
+    "date": "2014-05-11T05:34:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "Ashley Ross OSU CCAPP", 
+    "lines": [
+      [
+        1663, 
+        1667
+      ]
+    ], 
+    "version": "1156", 
+    "user": "anonymous", 
+    "date": "2014-05-16T03:39:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "OSU CCAPP", 
+    "lines": [
+      [
+        1663, 
+        1667
+      ]
+    ], 
+    "version": "1157", 
+    "user": "anonymous", 
+    "date": "2014-05-16T03:42:00", 
+    "changes": [
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        1248, 
+        1251
+      ]
+    ], 
+    "version": "1158", 
+    "user": "anonymous", 
+    "date": "2014-05-21T09:17:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "Dublin Institute for Advanced Studies", 
+    "lines": [
+      [
+        536, 
+        539
+      ]
+    ], 
+    "version": "1159", 
+    "user": "rainsworth", 
+    "date": "2014-05-30T06:12:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "[rollback version 1158]", 
+    "lines": [
+      [
+        536, 
+        547
+      ]
+    ], 
+    "version": "1160", 
+    "user": "anonymous", 
+    "date": "2014-05-21T09:17:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "added University of Geneva (with Schaerer,)", 
+    "lines": [
+      [
+        2216, 
+        2219
+      ]
+    ], 
+    "version": "1161", 
+    "user": "anonymous", 
+    "date": "2014-06-03T11:58:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }, 
+  {
+    "comment": "", 
+    "lines": [
+      [
+        1840, 
+        1843
+      ]
+    ], 
+    "version": "1162", 
+    "user": "anonymous", 
+    "date": "2014-06-05T20:27:00", 
+    "changes": [
+      " ", 
+      " ", 
+      " "
+    ]
+  }
+]
