@@ -1,0 +1,217 @@
+#!/usr/bin/env python
+
+import sys
+import copy 
+import mill
+import urllib
+import requests
+from pprint import pprint
+from bs4 import BeautifulSoup
+from dateutil import parser
+from operator import itemgetter
+
+FILENAME = 'mill_2014.json'
+PAGE_URL = 'http://www.astrobetter.com/wiki/tiki-pagehistory.php'
+PARAMS = dict(
+    page=r'Rumor+Mill',
+    # diff_style='sidediff',
+    diff_style='unidiff',
+    compare='Compare',
+    newver=0,
+    oldver=0,
+    paginate='off',
+    history_offset=0,
+    history_pagesize=25,
+    show_all_versions='y',
+)
+# http://www.astrobetter.com/wiki/tiki-pagehistory.php?
+# page=Rumor+Mill&
+# history_offset=0&
+# diff_style=unidiff&
+# show_all_versions=y&
+# compare=Compare&
+# newver=1161&
+# oldver=1160&
+# paginate=on&
+# history_pagesize=25
+
+# http://www.astrobetter.com/wiki/tiki-pagehistory.php?
+# page=Rumor+Mill&
+# history_offset=0&
+# diff_style=htmldiff&
+# show_all_versions=y&
+# compare=Compare&
+# newver=1161&
+# oldver=1160&
+# preview=1164
+
+
+
+FACULTY = ('faculty' in sys.argv)
+if FACULTY:
+    FILENAME = 'faculty_2014.json'
+    PARAMS['page'] = r'Rumor+Mill+Faculty-Staff'
+
+def urlencode_withoutplus(query):
+    '''Needed to encode the parameters safely for web url'''
+    if hasattr(query, 'items'):
+        query = query.items()
+    l = []
+    for k, v in query:
+        k = urllib.quote(str(k), safe=' /+')
+        v = urllib.quote(str(v), safe=' /+')
+        l.append(k + '=' + v)
+    return '?'+'&'.join(l)
+
+
+
+def get_page():
+    '''Grab the page with the global parameters'''
+    result = requests.get(PAGE_URL+urlencode_withoutplus(PARAMS))
+    result.soup = BeautifulSoup(result.text)
+    print result.url
+    return result
+
+def get_version():
+    '''Get the current version from the website.'''
+    result = get_page()
+
+    for item in result.soup.find_all('strong'):
+        if 'Current' in item.text:
+            for x in item.find_all('br'):
+                x.insert_after('\n')
+                x.extract()
+            return int(item.text.split()[0])
+    raise ValueError('Could not find version')
+
+def setup_version():
+    version = get_version()
+    PARAMS['newver'] = version
+    PARAMS['oldver'] = version - 1
+    
+
+
+
+def get_info(result):
+    '''Get the info for the change'''
+    soup = ( 
+        result.soup.find('div', {'style':['text-align:center;']})
+                   .find('table',{'class':'normal'})
+                   .find('strong').findParents()[1]
+    )
+    items = [ # ensures ordering
+        ['date',    parser.parse],
+        ['user',    lambda x: str(x)],
+        ['comment', lambda x: str(x)],
+        ['version', lambda x: int(x.replace('Current',''))],
+    ]
+    out = {item:fcn(td.text.strip())
+           for td,(item,fcn) in zip(soup.find_all('td'), items)}
+    return out
+
+
+def cleandiv(divstr):
+    return (divstr.strip()
+                  .replace(u'\xa0','')
+                  .replace('\t','') )
+
+def get_changes(result):
+    soup = result.soup.find('table', {'class':['normal','diff']})
+    out = []
+    for tmp in soup.find_all('td',{'colspan':'4'}):
+        for div in tmp.find_all('div'):
+            if div['class'][0] in ['diffheader','diffbody','diffdeleted','diffadded']:
+                out.append(cleandiv(div.text))
+    return out
+    # raise ValueError()
+
+
+def get_preview():
+    PARAMS['preview'] = PARAMS['newver']
+    result = get_page()
+    PARAMS.pop('preview')
+    return result.soup.find('div', {'class':'wikitext'}).prettify()
+
+
+# def get_lines(soup):
+#     for x in soup.find_all('tr',{'class':'diffheader'}):
+#         for y in x.find_all('td'):
+#             lines = map(int, y.text
+#                               .split(':')[1]
+#                               .replace(u'\xa0','')
+#                               .split('-'))
+#         yield lines
+
+# def get_changes(soup):
+#     '''Currently get the before and after text without styling.
+#     delete anything with diffinldel span, add diffadded text'''
+#     first = True
+#
+#     for x in soup.find_all('tr',{'class':'diffbody'}):
+#         for y in x.find_all('td'):
+#             tmp = y.text.replace(u'\xa0','').strip()
+#             if len(tmp) > 0:
+#                 yield u'{}'.format(tmp)
+#
+#     items = {'diffdeleted':'-', 'diffadded':'+'}
+#     for item,key in items.iteritems():
+#         for y in soup.find_all('td', {'class':item}):
+#             tmp = y.text.replace(u'\xa0','').strip()
+#             if len(tmp) > 1:
+#                 yield u'{}: {}'.format(key, tmp)
+#         # if not first:
+#         #     [item.extract() for item in x.find_all('span',{'class':'diffinldel'})]
+#         #     first = False
+#         # for item in x.find_all('br'):
+#         #     item.insert_after('\n')
+#         #     item.extract()
+#         #
+#         # tmp = x.find('td').text.replace(u'\xa0',' ')
+#         # print tmp
+#         # yield tmp
+
+def get_change():
+    result = get_page()
+    if 'Versions are identical' in result.text:
+        return 
+    out = get_info(result)
+    out['newver'] = PARAMS['newver']
+    out['oldver'] = PARAMS['oldver']
+    out['changes'] = get_changes(result)
+    out['preview'] = get_preview()
+    
+    # out['lines'] = list(get_lines(soup))
+    # out['changes'] = list(set(list(get_changes(soup))))
+    # pprint(out)
+    
+    # raise ValueError()
+    return out
+    
+def get_data():
+    with mill.Data(FILENAME) as data:
+        while PARAMS['oldver'] > 0:
+            versions = [x.get('newver', 0) for x in data]
+            if PARAMS['newver'] in versions:
+                print 'Done: {0[oldver]} {0[newver]}'.format(PARAMS)
+            else:
+                tmp = get_change()
+                if tmp is None:
+                    break
+                data.data.append(tmp)
+            PARAMS['oldver'] -= 1
+            PARAMS['newver'] -= 1
+        data.data = sorted(data.data, key=itemgetter('version'))
+        return data.data
+
+
+
+if __name__ == '__main__':
+    from pysurvey import util
+    util.setup_stop()
+    
+    # pprint(get_change())
+    
+    setup_version()
+    # get_version()
+    get_data()
+    # pprint()
