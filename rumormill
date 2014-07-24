@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import os
 import sys
 import copy 
 import mill
@@ -10,7 +11,12 @@ from bs4 import BeautifulSoup
 from dateutil import parser
 from operator import itemgetter
 
-FILENAME = 'mill_2014.json'
+
+FACULTY = ('faculty' in sys.argv)
+FULL = ('full' in sys.argv)
+DEBUG = ('debug' in sys.argv)
+
+
 PAGE_URL = 'http://www.astrobetter.com/wiki/tiki-pagehistory.php'
 PARAMS = dict(
     page=r'Rumor+Mill',
@@ -24,33 +30,17 @@ PARAMS = dict(
     history_pagesize=25,
     show_all_versions='y',
 )
-# http://www.astrobetter.com/wiki/tiki-pagehistory.php?
-# page=Rumor+Mill&
-# history_offset=0&
-# diff_style=unidiff&
-# show_all_versions=y&
-# compare=Compare&
-# newver=1161&
-# oldver=1160&
-# paginate=on&
-# history_pagesize=25
 
-# http://www.astrobetter.com/wiki/tiki-pagehistory.php?
-# page=Rumor+Mill&
-# history_offset=0&
-# diff_style=htmldiff&
-# show_all_versions=y&
-# compare=Compare&
-# newver=1161&
-# oldver=1160&
-# preview=1164
+DIRECTORY = os.path.expanduser('~/data/rumormill/')
+if not os.path.exists(DIRECTORY):
+    DIRECTORY = './'
 
-
-
-FACULTY = ('faculty' in sys.argv)
+NAME = 'mill_2014.json'
 if FACULTY:
-    FILENAME = 'faculty_2014.json'
+    NAME = 'faculty_2014.json'
     PARAMS['page'] = r'Rumor+Mill+Faculty-Staff'
+FILENAME = os.path.join(DIRECTORY, NAME)
+
 
 def urlencode_withoutplus(query):
     '''Needed to encode the parameters safely for web url'''
@@ -115,60 +105,33 @@ def cleandiv(divstr):
                   .replace(u'\xa0','')
                   .replace('\t','') )
 
-def get_changes(result):
+def get_delta(result):
     soup = result.soup.find('table', {'class':['normal','diff']})
     out = []
+    for bold in soup.find_all('strong'):
+        bold.insert_after(u'*{}*'.format(bold.text.strip()))
+        bold.extract()
+    for div in soup.find_all('ins'):
+        div.insert_after(div.text.strip())
+        div.extract()
+    for div in soup.find_all('del'):
+        div.insert_after(div.text.strip())
+        div.extract()
+    
     for tmp in soup.find_all('td',{'colspan':'4'}):
         for div in tmp.find_all('div'):
             if div['class'][0] in ['diffheader','diffbody','diffdeleted','diffadded']:
-                out.append(cleandiv(div.text))
+                x = cleandiv(div.text)
+                out.append(x)
+                div.insert_after(x)
+                div.extract()
     return out
-    # raise ValueError()
-
 
 def get_preview():
     PARAMS['preview'] = PARAMS['newver']
     result = get_page()
     PARAMS.pop('preview')
     return result.soup.find('div', {'class':'wikitext'}).prettify()
-
-
-# def get_lines(soup):
-#     for x in soup.find_all('tr',{'class':'diffheader'}):
-#         for y in x.find_all('td'):
-#             lines = map(int, y.text
-#                               .split(':')[1]
-#                               .replace(u'\xa0','')
-#                               .split('-'))
-#         yield lines
-
-# def get_changes(soup):
-#     '''Currently get the before and after text without styling.
-#     delete anything with diffinldel span, add diffadded text'''
-#     first = True
-#
-#     for x in soup.find_all('tr',{'class':'diffbody'}):
-#         for y in x.find_all('td'):
-#             tmp = y.text.replace(u'\xa0','').strip()
-#             if len(tmp) > 0:
-#                 yield u'{}'.format(tmp)
-#
-#     items = {'diffdeleted':'-', 'diffadded':'+'}
-#     for item,key in items.iteritems():
-#         for y in soup.find_all('td', {'class':item}):
-#             tmp = y.text.replace(u'\xa0','').strip()
-#             if len(tmp) > 1:
-#                 yield u'{}: {}'.format(key, tmp)
-#         # if not first:
-#         #     [item.extract() for item in x.find_all('span',{'class':'diffinldel'})]
-#         #     first = False
-#         # for item in x.find_all('br'):
-#         #     item.insert_after('\n')
-#         #     item.extract()
-#         #
-#         # tmp = x.find('td').text.replace(u'\xa0',' ')
-#         # print tmp
-#         # yield tmp
 
 def get_change():
     result = get_page()
@@ -177,27 +140,28 @@ def get_change():
     out = get_info(result)
     out['newver'] = PARAMS['newver']
     out['oldver'] = PARAMS['oldver']
-    out['changes'] = get_changes(result)
+    out['changes'] = get_delta(result)
     out['preview'] = get_preview()
-    
-    # out['lines'] = list(get_lines(soup))
-    # out['changes'] = list(set(list(get_changes(soup))))
-    # pprint(out)
-    
-    # raise ValueError()
     return out
     
 def get_data():
+    if DEBUG:
+        get_change()
+        return
+    
+    k=0
     with mill.Data(FILENAME) as data:
         while PARAMS['oldver'] > 0:
+            if k > 3: break
             versions = [x.get('newver', 0) for x in data]
-            if PARAMS['newver'] in versions:
+            if (PARAMS['newver'] in versions) and not FULL:
                 print 'Done: {0[oldver]} {0[newver]}'.format(PARAMS)
             else:
                 tmp = get_change()
                 if tmp is None:
-                    break
-                data.data.append(tmp)
+                    k += 1
+                else:
+                    data.data.append(tmp)
             PARAMS['oldver'] -= 1
             PARAMS['newver'] -= 1
         data.data = sorted(data.data, key=itemgetter('version'))
@@ -209,9 +173,5 @@ if __name__ == '__main__':
     from pysurvey import util
     util.setup_stop()
     
-    # pprint(get_change())
-    
     setup_version()
-    # get_version()
     get_data()
-    # pprint()
