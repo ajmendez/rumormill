@@ -35,7 +35,7 @@ DIRECTORY = os.path.expanduser('~/data/rumormill/')
 if not os.path.exists(DIRECTORY):
     DIRECTORY = './'
 
-NAME = 'mill_2014.json'
+NAME = 'postdoc_2014.json'
 if FACULTY:
     NAME = 'faculty_2014.json'
     PARAMS['page'] = r'Rumor+Mill+Faculty-Staff'
