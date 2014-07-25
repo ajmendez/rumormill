@@ -6,6 +6,7 @@ import copy
 import mill
 import urllib
 import requests
+import cookielib
 from pprint import pprint
 from bs4 import BeautifulSoup
 from dateutil import parser
@@ -42,6 +43,13 @@ if FACULTY:
 FILENAME = os.path.join(DIRECTORY, NAME)
 
 
+COOKIEFILE = os.path.expanduser('~/.limited/astrobetter_cookies.txt')
+COOKIES = cookielib.MozillaCookieJar(COOKIEFILE)
+COOKIES.load()
+
+
+
+
 def urlencode_withoutplus(query):
     '''Needed to encode the parameters safely for web url'''
     if hasattr(query, 'items'):
@@ -55,9 +63,9 @@ def urlencode_withoutplus(query):
 
 
 
-def get_page():
+def get_page(url=PAGE_URL, params=PARAMS, cookies=COOKIES):
     '''Grab the page with the global parameters'''
-    result = requests.get(PAGE_URL+urlencode_withoutplus(PARAMS))
+    result = requests.get(url+urlencode_withoutplus(params), cookies=cookies)
     result.soup = BeautifulSoup(result.text)
     print result.url
     return result
@@ -79,8 +87,14 @@ def setup_version():
     PARAMS['newver'] = version
     PARAMS['oldver'] = version - 1
     
-
-
+def get_source(version):
+    params = dict(
+        page=PARAMS['page'],
+        source=version,
+    )
+    result = get_page(params=params)
+    return BeautifulSoup(result.text).find('textarea', {'id':'page_source'}).prettify()
+    
 
 def get_info(result):
     '''Get the info for the change'''
@@ -142,6 +156,7 @@ def get_change():
     out['oldver'] = PARAMS['oldver']
     out['changes'] = get_delta(result)
     out['preview'] = get_preview()
+    out['source'] = get_source(PARAMS['newver'])
     return out
     
 def get_data():
