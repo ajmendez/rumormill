@@ -4,6 +4,7 @@ import os
 import sys
 import copy 
 import mill
+import twill
 import urllib
 import requests
 import cookielib
@@ -11,6 +12,7 @@ from pprint import pprint
 from bs4 import BeautifulSoup
 from dateutil import parser
 from operator import itemgetter
+from pymendez.auth import auth
 
 
 FACULTY = ('faculty' in sys.argv)
@@ -43,12 +45,20 @@ if FACULTY:
 FILENAME = os.path.join(DIRECTORY, NAME)
 
 
-COOKIEFILE = os.path.expanduser('~/.limited/astrobetter_cookies.txt')
-COOKIES = cookielib.MozillaCookieJar(COOKIEFILE)
-COOKIES.load()
-
-
-
+USERNAME,PASSWORD = auth('astrobetter',['username','password'])
+# COOKIEFILE = os.path.expanduser('~/.limited/astrobetter_cookies.txt')
+# COOKIES = cookielib.MozillaCookieJar(COOKIEFILE)
+# COOKIES.load()
+def login_cookies(username=USERNAME, password=PASSWORD):
+    twill.commands.go(PAGE_URL)
+    twill.commands.formaction('1', 'http://www.astrobetter.com/wiki/tiki-login.php')
+    twill.commands.formclear('1')
+    twill.commands.fv('1', 'user', username)
+    twill.commands.fv('1', 'pass', password)
+    twill.commands.submit('1')
+    browser = twill.commands.get_browser()
+    return browser._session.cookies
+COOKIES = login_cookies()
 
 def urlencode_withoutplus(query):
     '''Needed to encode the parameters safely for web url'''
