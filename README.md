@@ -8,3 +8,6 @@ Now, this requires a login, to access the history pages.
 
 python-dateutil twill beautilfulsoup4
 
+
+NOTE: currently broken!
+
