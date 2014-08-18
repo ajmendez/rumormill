@@ -58,7 +58,10 @@ def login_cookies(username=USERNAME, password=PASSWORD):
     twill.commands.submit('1')
     browser = twill.commands.get_browser()
     return browser._session.cookies
-COOKIES = login_cookies()
+
+COOKIES = None
+if __name__ == '__main__':
+    COOKIES = login_cookies()
 
 def urlencode_withoutplus(query):
     '''Needed to encode the parameters safely for web url'''
@@ -73,8 +76,11 @@ def urlencode_withoutplus(query):
 
 
 
-def get_page(url=PAGE_URL, params=PARAMS, cookies=COOKIES):
+def get_page(url=PAGE_URL, params=PARAMS, cookies=None):
     '''Grab the page with the global parameters'''
+    if not cookies:
+        cookies = COOKIES
+    
     result = requests.get(url+urlencode_withoutplus(params), cookies=cookies)
     result.soup = BeautifulSoup(result.text)
     print result.url
@@ -110,8 +116,8 @@ def get_info(result):
     '''Get the info for the change'''
     soup = ( 
         result.soup.find('div', {'style':['text-align:center;']})
-                   .find('table',{'class':'normal'})
-                   .find('strong').findParents()[1]
+                   .find('table',{'class':'formcolor'})
+                   .find('strong').findParents()[2]
     )
     items = [ # ensures ordering
         ['date',    parser.parse],
@@ -119,8 +125,16 @@ def get_info(result):
         ['comment', lambda x: str(x)],
         ['version', lambda x: int(x.replace('Current',''))],
     ]
-    out = {item:fcn(td.text.strip())
-           for td,(item,fcn) in zip(soup.find_all('td'), items)}
+    out = {}
+    for x in zip(soup.find_all('td'), items):
+        try:
+            td, (tem, fcn) = x
+            out[item] = fcn(td.text.strip())
+        except:
+            pass
+    
+    # out = {item:fcn(td.text.strip())
+    #        for td,(item,fcn) in zip(soup.find_all('td'), items)}
     return out
 
 
