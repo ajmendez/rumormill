@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 import os
 import sys
 import copy 
@@ -60,8 +58,7 @@ def login_cookies(username=USERNAME, password=PASSWORD):
     return browser._session.cookies
 
 COOKIES = None
-if __name__ == '__main__':
-    COOKIES = login_cookies()
+
 
 def urlencode_withoutplus(query):
     '''Needed to encode the parameters safely for web url'''
@@ -208,9 +205,3 @@ def get_data():
 
 
 
-if __name__ == '__main__':
-    from pysurvey import util
-    util.setup_stop()
-    
-    setup_version()
-    get_data()

@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+from rumormill import archive
+from rumormill import get_data, setup_version
+
+
+if __name__ == '__main__':
+    from pysurvey import util
+    util.setup_stop()
+    
+    archive.COOKIES = login_cookies()
+    setup_version()
+    get_data()
