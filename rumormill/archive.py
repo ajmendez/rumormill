@@ -13,14 +13,10 @@ from operator import itemgetter
 from pymendez.auth import auth
 
 
-FACULTY = ('faculty' in sys.argv)
-FULL = ('full' in sys.argv)
-DEBUG = ('debug' in sys.argv)
 
 
 PAGE_URL = 'http://www.astrobetter.com/wiki/tiki-pagehistory.php'
 PARAMS = dict(
-    page=r'Rumor+Mill',
     # diff_style='sidediff',
     diff_style='unidiff',
     compare='Compare',
@@ -32,15 +28,16 @@ PARAMS = dict(
     show_all_versions='y',
 )
 
-DIRECTORY = os.path.expanduser('~/data/rumormill/')
+DIRECTORY = os.path.expanduser('~/data/rumormill/data/')
 if not os.path.exists(DIRECTORY):
     DIRECTORY = './'
 
-NAME = 'postdoc_2014.json'
-if FACULTY:
-    NAME = 'faculty_2014.json'
-    PARAMS['page'] = r'Rumor+Mill+Faculty-Staff'
-FILENAME = os.path.join(DIRECTORY, NAME)
+POSTDOC_NAME = 'postdoc_2014.json'
+FACULTY_NAME = 'faculty_2014.json'
+
+POSTDOC_PAGE = 'Rumor+Mill'
+FACULTY_PAGE = 'Rumor+Mill+Faculty-Staff'
+PAGE = None
 
 
 USERNAME,PASSWORD = auth('astrobetter',['username','password'])
@@ -73,14 +70,19 @@ def urlencode_withoutplus(query):
 
 
 
-def get_page(url=PAGE_URL, params=PARAMS, cookies=None):
+def get_page(url=PAGE_URL, params=PARAMS, page=None, cookies=None):
     '''Grab the page with the global parameters'''
     if not cookies:
         cookies = COOKIES
+    if not page:
+        page = PAGE
     
-    result = requests.get(url+urlencode_withoutplus(params), cookies=cookies)
+    tmp = {'page':page}
+    tmp.update(params)
+    
+    result = requests.get(url+urlencode_withoutplus(tmp), cookies=cookies)
     result.soup = BeautifulSoup(result.text)
-    print result.url
+    # print result.url
     return result
 
 def get_version():
@@ -100,9 +102,11 @@ def setup_version():
     PARAMS['newver'] = version
     PARAMS['oldver'] = version - 1
     
-def get_source(version):
+def get_source(version, page=None):
+    if not page:
+        page = PAGE
     params = dict(
-        page=PARAMS['page'],
+        page=page,
         source=version,
     )
     result = get_page(params=params)
@@ -111,28 +115,42 @@ def get_source(version):
 
 def get_info(result):
     '''Get the info for the change'''
+    def _date(x):
+        return parser.parse(x.split('by')[0])
+    
+    def _user(x):
+        return x.split('by')[1].splitlines()[0].strip()
+    
+    def _comment(x):
+        return '\n'.join(tmp[0].splitlines()[2:]).replace('\t','')
+    
     soup = ( 
         result.soup.find('div', {'style':['text-align:center;']})
                    .find('table',{'class':'formcolor'})
-                   .find('strong').findParents()[2]
+                   .find('strong').findParents()[1]
     )
-    items = [ # ensures ordering
-        ['date',    parser.parse],
-        ['user',    lambda x: str(x)],
-        ['comment', lambda x: str(x)],
-        ['version', lambda x: int(x.replace('Current',''))],
-    ]
-    out = {}
-    for x in zip(soup.find_all('td'), items):
-        try:
-            td, (tem, fcn) = x
-            out[item] = fcn(td.text.strip())
-        except:
-            pass
+    tmp = [td.text.strip() for td in soup.find_all('td')]
+    # print tmp[0]
+    items = { # ensures ordering
+        'date':    _date(tmp[0]),
+        'user':    _user(tmp[0]),
+        'version': int(tmp[1].replace('Current','')),
+        'comment': _comment(tmp[0]),
+    }
+    return items
+    # out = {}
+    # for x in zip(soup.find_all('td'), items):
+    #     # print x
+    #     try:
+    #         td, (item, fcn) = x
+    #         out[item] = fcn(td.text.strip())
+    #     except Exception as e:
+    #         print e
+    #         # pass
     
     # out = {item:fcn(td.text.strip())
     #        for td,(item,fcn) in zip(soup.find_all('td'), items)}
-    return out
+    # return out
 
 
 def cleandiv(divstr):
@@ -180,17 +198,13 @@ def get_change():
     out['source'] = get_source(PARAMS['newver'])
     return out
     
-def get_data():
-    if DEBUG:
-        get_change()
-        return
-    
+def get_data(full=False):
     k=0
     with mill.Data(FILENAME) as data:
         while PARAMS['oldver'] > 0:
             if k > 3: break
             versions = [x.get('newver', 0) for x in data]
-            if (PARAMS['newver'] in versions) and not FULL:
+            if (PARAMS['newver'] in versions) and not full:
                 print 'Done: {0[oldver]} {0[newver]}'.format(PARAMS)
             else:
                 tmp = get_change()
