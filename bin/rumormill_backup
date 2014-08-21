@@ -16,7 +16,7 @@ else:
     NAME = archive.POSTDOC_NAME
     archive.PAGE = archive.POSTDOC_PAGE
 
-archive.FILENAME = os.path.join(archive.DIRECTORY, NAME)
+FILENAME = os.path.join(archive.DIRECTORY, NAME)
 
 
 if __name__ == '__main__':
@@ -29,4 +29,5 @@ if __name__ == '__main__':
     if DEBUG:
         archive.get_change()
     else:
-        archive.get_data(full=FULL)
+        archive.get_data(FILENAME, full=FULL)
+    print archive.PARAMS

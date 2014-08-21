@@ -198,9 +198,9 @@ def get_change():
     out['source'] = get_source(PARAMS['newver'])
     return out
     
-def get_data(full=False):
+def get_data(filename, full=False):
     k=0
-    with mill.Data(FILENAME) as data:
+    with mill.Data(filename) as data:
         while PARAMS['oldver'] > 0:
             if k > 3: break
             versions = [x.get('newver', 0) for x in data]
