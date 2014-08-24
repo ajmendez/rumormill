@@ -28,7 +28,7 @@ PARAMS = dict(
     show_all_versions='y',
 )
 
-DIRECTORY = os.path.expanduser('~/data/rumormill/data/')
+DIRECTORY = os.path.expanduser('~/data/rumormill/')
 if not os.path.exists(DIRECTORY):
     DIRECTORY = './'
 
