@@ -1,7 +1,7 @@
 rumormill
 =========
 
-Broken!
+Possibly working.
 
 python-dateutil twill beautilfulsoup4
 
