@@ -3,6 +3,11 @@ import dateutil.parser
 from datetime import datetime
 # from bson import json_util
 
+
+# TODO move this into a standard datatype.
+
+
+
 def date_handler(obj):
     return obj.isoformat() if hasattr(obj, 'isoformat') else obj
  
