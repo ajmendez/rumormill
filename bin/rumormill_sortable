@@ -1,0 +1,41 @@
+#!/usr/bin/env python
+import codecs
+import requests
+from bs4 import BeautifulSoup
+
+
+URL = 'https://jobregister.aas.org'
+CACHE = '/tmp/rumormill.txt'
+def get_page():
+    try:
+        with codecs.open(CACHE, "r") as f:
+            print 'Loaded Cache!'
+            return f.read()
+    except:
+        page = requests.get(URL).text
+        with codecs.open(CACHE, "w", "utf-8-sig") as f:
+            f.write(page)
+        return page
+
+        
+
+def build_sortable():
+    soup = BeautifulSoup(get_page())
+    s = soup.find('div', {'class':'pane-2'})
+    table = s.find('table')
+    for tr in table.findAll('tr'):
+        if tr.get('class') == 'JR_Table_Row_Category':
+            print tr.text
+            break
+        # print tr.prettify()
+        # break
+    # print table.prettify()
+    
+    # for table in s.findAll('table'):
+    #     print table.find('tr',{'class':'JR_Table_Row_Category'}).text
+    #     # print table.prettify()
+    #     print '------'
+
+
+if __name__ == '__main__':
+    build_sortable()
